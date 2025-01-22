@@ -1,0 +1,23 @@
+{
+  "name": "demoserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@mongodb-js/charts-embed-dom": "^3.2.0",
+    "browserslist": "^4.23.0",
+    "caniuse-lite": "^1.0.30001599",
+    "cors": "^2.8.5",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "parcel": "1.12.3",
+    "request": "^2.88.2",
+    "nodemon" : "^3.0.1"
+  }
+}

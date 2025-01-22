@@ -1,0 +1,19 @@
+.mongo {
+  height: calc(100vh - 200px);
+  width: calc(100vw - 20px);
+  text-align: center;
+}
+
+select {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.no-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  border: 1px solid;
+  border-radius: 5px;
+}

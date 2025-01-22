@@ -1,0 +1,32 @@
+.table-container {
+    margin: 20px auto;
+    width: 95%; /* Increase the container width */
+    max-width: 1200px; /* Increase max width for larger screens */
+    text-align: center;
+  }
+  
+  .conversation-table {
+    width: 100%; /* Maintain full width within the container */
+    max-width: 1000px;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .conversation-table th, .conversation-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .conversation-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .conversation-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .conversation-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  

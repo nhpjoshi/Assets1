@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Bookmark Extension</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 320px;
+        }
+
+        .title {
+            font-size: 24px;
+            margin-bottom: 16px;
+            text-align: left;
+            color: #333;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .tab {
+            flex: 1;
+            background-color: #e0e7ff;
+            color: #333;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .tab:hover {
+            background-color: #c7d2fe;
+        }
+
+        .tab.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .search-area {
+            margin-bottom: 16px;
+        }
+
+        .label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: #f9fafb;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 8px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            background-color: transparent;
+            outline: none;
+            font-size: 16px;
+            padding-left: 8px;
+            color: #333;
+        }
+
+        .search-box button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-box button img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .search-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-submit:hover {
+            background-color: #2563eb;
+        }
+
+        .results {
+            margin-top: 16px;
+            padding: 16px;
+            background-color: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .results p {
+            color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1 class="title">Search Bookmark</h1>
+        <div class="tabs">
+            <button class="tab active">Search Bookmark</button>
+            <button class="tab">Make Bookmark</button>
+        </div>
+        <div class="search-area">
+            <label for="searchTerm" class="label">Search Term:</label>
+            <div class="search-box">
+                <input type="text" id="searchTerm" placeholder="Enter search term">
+                <button class="search-button">
+                    <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Search">
+                </button>
+            </div>
+        </div>
+        <button class="search-submit">Search</button>
+
+        <div class="results">
+            <p>No results yet.</p>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+
+                // Add active class to clicked tab
+                this.classList.add('active');
+            });
+        });
+
+        document.querySelector('.search-submit').addEventListener('click', function () {
+            const searchTerm = document.getElementById('searchTerm').value;
+
+            if (searchTerm) {
+                document.querySelector('.results').innerHTML = `<p>Results for "${searchTerm}"</p>`;
+            } else {
+                document.querySelector('.results').innerHTML = `<p>No search term entered.</p>`;
+            }
+        });
+    </script>
+</body>
+</html>

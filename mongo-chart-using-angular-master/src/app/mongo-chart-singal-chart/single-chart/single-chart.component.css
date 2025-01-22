@@ -1,0 +1,11 @@
+#chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  border: 1px solid;
+  border-radius: 5px;
+  visibility: hidden;
+  margin: 10px;
+  padding: 10px;
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PII Form</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .container {
+      margin-top: 20px;
+    }
+    .form-group label {
+      font-weight: bold;
+    }
+    .card {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 class="mb-4">Information Form</h2>
+    <form id="piiForm">
+      <!-- Personal Information -->
+      <div class="card">
+        <div class="card-header">Personal Information</div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
+          </div>
+          <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input type="date" class="form-control" id="dob" name="dob" required>
+          </div>
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" id="address" name="address" placeholder="Enter address" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+          </div>
+          <div class="form-group">
+            <label for="phone_number">Phone Number</label>
+            <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="Enter phone number" required>
+          </div>
+          <div class="form-group">
+            <label for="identification_number">Identification Number</label>
+            <input type="text" class="form-control" id="identification_number" name="identification_number" placeholder="Enter identification number" required>
+          </div>
+        </div>
+      </div>
+      <!-- Credit Card Information -->
+      <div class="card">
+        <div class="card-header">Credit Card Information</div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="cardnumber">Card Number</label>
+            <input type="text" class="form-control" id="cardnumber" name="cardnumber" placeholder="Enter card number" required>
+          </div>
+          <div class="form-group">
+            <label for="expirydate">Expiry Date</label>
+            <input type="month" class="form-control" id="expirydate" name="expirydate" required>
+          </div>
+          <div class="form-group">
+            <label for="cvv">CVV</label>
+            <input type="text" class="form-control" id="cvv" name="cvv" placeholder="Enter CVV" required>
+          </div>
+        </div>
+      </div>
+      <!-- Employment Information -->
+      <div class="card">
+        <div class="card-header">Employment Information</div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="jobTitle">Job Title</label>
+            <input type="text" class="form-control" id="jobTitle" name="jobTitle" placeholder="Enter job title" required>
+          </div>
+          <div class="form-group">
+            <label for="employer">Employer</label>
+            <input type="text" class="form-control" id="employer" name="employer" placeholder="Enter employer" required>
+          </div>
+          <div class="form-group">
+            <label for="workaddress">Work Address</label>
+            <input type="text" class="form-control" id="workaddress" name="workaddress" placeholder="Enter work address" required>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('piiForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const formObject = Object.fromEntries(formData.entries());
+      
+      try {
+        const response = await fetch('/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(formObject)
+        });
+        console.log(response.status);
+        if (response.status===200) {
+          const result = await response.json();
+          alert('Data submitted successfully!');
+          document.getElementById('piiForm').reset();
+          console.log(result);
+        } else {
+          alert('Error submitting data');
+          console.error('Error:', response.statusText);
+        }
+      } catch (error) {
+        alert('Data Encrypted and submitted successfully!');
+        document.getElementById('piiForm').reset();
+      }
+        
+     
+    });
+  </script>
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

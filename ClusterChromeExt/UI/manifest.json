@@ -1,0 +1,15 @@
+{
+    "manifest_version": 3,
+    "name": "MongoDB Clusters Viewer",
+    "version": "1.0",
+    "description": "A Chrome extension to display MongoDB clusters information.",
+    "action": {
+  "default_popup": "popup.html",
+  "default_size": {
+    "width": 1000,
+    "height": 800
+  }
+},
+    "permissions": []
+  }
+  

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Changer</title>
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' code.jquery.com">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    /* Add custom styles here */
+    body {
+      width: 400px; /* Adjust the width as needed */
+      height: 300px; /* Adjust the height as needed */
+    }
+    #formContainer {
+      max-width: 600px;
+      margin: 20px auto;
+      text-align: center; /* Center align the content */
+      border-radius: 20px; /* Make the corners rounded */
+      overflow: hidden; /* Ensure content doesn't overflow rounded corners */
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Add a shadow effect */
+      height: 500px;
+    }
+
+    .bookmark-heading {
+      font-size: 1.5rem; /* Larger font size */
+      color: #007bff; /* Blue color */
+      margin-bottom: 20px; /* Add some space below the heading */
+    }
+    form label {
+      margin-top: 10px;
+      display: block;
+    }
+    form input[type="text"],
+    form textarea {
+      width: 100%;
+      font-size: 12px;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 10px; /* Add margin below each input field */
+      box-sizing: border-box;
+    }
+    form textarea[name="description"] {
+      font-size: 10px; /* Adjust the font size as needed */
+    }
+    #resultsContainer {
+      margin-top: 20px;
+    }
+    #resultsTextArea {
+      width: 100%;
+      height: 200px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 10px;
+      resize: none;
+      white-space: pre-wrap; /* To keep formatting of the text */
+    }
+    form button[type="button"] {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px; /* Adjust the top margin */
+      margin-bottom: 20px; /* Adjust the bottom margin */
+      background-color: #007bff;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+    }
+    form button[type="button"]:hover {
+      background-color: #5f00b3;
+    }
+    .bookmark-heading {
+      font-size: 1.5rem; /* Decreased font size */
+      color: #007bff; /* Blue color */
+      margin-bottom: 20px; /* Add some space below the heading */
+      font-weight: bold; /* Make the text bold */
+      text-transform: uppercase; /* Convert text to uppercase */
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a shadow effect */
+    }
+    #resultsDiv {
+      width: 100%;
+      height: 200px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 12px;
+      resize: none;
+      white-space: pre-wrap; /* To keep formatting of the text */
+      overflow-y: auto; /* Add vertical scrolling */
+    }
+  </style>
+  <script src="popup.js"></script>
+
+</head>
+<body>
+  <div class="container" id="formContainer">
+    <!-- Tab Navigation -->
+    <ul class="nav nav-tabs" id="myTabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="searchBookmark-tab" data-toggle="tab" href="#searchBookmark" role="tab" aria-controls="searchBookmark" aria-selected="true">Search Bookmark</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="makeBookmark-tab" data-toggle="tab" href="#makeBookmark" role="tab" aria-controls="makeBookmark" aria-selected="false">Make Bookmark</a>
+      </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="myTabContent">
+      <!-- Search Bookmark Tab Content -->
+      <div class="tab-pane fade show active" id="searchBookmark" role="tabpanel" aria-labelledby="searchBookmark-tab">
+        <h3 class="bookmark-heading">Search Bookmark</h3>
+        <!-- Form -->
+        <form id="searchForm">
+          <label for="searchTerm">Search Term:</label>
+          <input type="text" id="searchTerm" name="searchTerm" class="form-control">
+          <button type="button" id="searchButton" class="btn btn-primary" data-action="searchData">Search</button>
+          <div id="resultsContainer">
+            <div id="resultsDiv"></div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Make Bookmark Tab Content -->
+      <div class="tab-pane fade" id="makeBookmark" role="tabpanel" aria-labelledby="makeBookmark-tab">
+        <h3 class="bookmark-heading">Make Bookmark</h3>
+        <!-- Form -->
+        <form id="dataForm">
+          <label for="Link">Link:</label>
+          <input type="text" id="Link" name="Link" class="form-control">
+          <label for="description">Description:</label>
+          <textarea id="description" name="description" rows="9" class="form-control"></textarea>
+          <label for="reference">Reference:</label>
+          <input type="text" id="reference" name="reference" class="form-control">
+          <button type="button" id="submitData" class="btn btn-primary" data-action="postData">Vector It</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="jquery-3.5.1.slim.min.js"></script>
+  <script src="popper.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+</body>
+</html>

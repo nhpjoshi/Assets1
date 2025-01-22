@@ -1,0 +1,36 @@
+services:
+  server:
+    build:
+      context: ./Server
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - app_network
+
+  client:
+    build:
+      context: ./Client
+    depends_on:
+      - server
+    environment:
+      - NODE_ENV=production
+    networks:
+      - app_network
+
+  ui:
+    build:
+      context: ./UI
+    ports:
+      - "3001:3001"
+    environment:
+      - REACT_APP_SERVER_URL=ws://server:4000 # URL to connect to the WebSocket server
+    stdin_open: true
+    tty: true
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge

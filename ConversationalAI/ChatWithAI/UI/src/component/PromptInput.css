@@ -1,0 +1,27 @@
+/* Thinking and Typing Animation */
+.thinking-animation,
+.typing-animation {
+  font-size: 1.2em;
+  color: #555;
+  display: inline-flex;
+  align-items: center;
+}
+
+.thinking-animation .dot,
+.typing-animation .dot {
+  animation: pulse 1s infinite ease-in-out;
+  margin-left: 3px;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+

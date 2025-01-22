@@ -1,0 +1,20 @@
+<div class="mongo">
+  <div style="display: block; text-align: center">
+    <asl-google-signin-button style="display: inline-block;text-align: center;margin: auto; padding-top: 15px"/>
+  </div>
+
+  <h2 class="header">Mongo Chart Dashboard</h2>
+  <select (change)="changeType($event)">
+    <option value="none">Choose One</option>
+    <option value="dashboard">Show Dashboard</option>
+   <option value="chart">Show single chart</option>
+  </select>
+
+  <app-dashboard *ngIf="showChartType === 'dashboard'"></app-dashboard>
+  <app-single-chart *ngIf="showChartType === 'chart'"></app-single-chart>
+
+  <h2 *ngIf="showChartType === 'none'"
+      class="no-item">
+    No Item selected
+  </h2>
+</div>
