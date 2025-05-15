@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  mongo3:
+    image: mongo:6
+    container_name: mongo3
+    networks:
+      - shared
+    command: mongod --replSet rs0 --bind_ip_all
+    ports:
+      - "27019:27017"  # Exposes mongo3 on host port 27019
+
+  mongo4:
+    image: mongo:6
+    container_name: mongo4
+    networks:
+      - shared
+    command: mongod --replSet rs0 --bind_ip_all
+    ports:
+      - "27020:27017"  # Exposes arbiter on host port 27020
+
+networks:
+  shared:
+    external: true

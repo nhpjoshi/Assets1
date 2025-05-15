@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  mongo1:
+    image: mongo:6
+    container_name: mongo1
+    networks:
+      - shared
+    command: mongod --replSet rs0 --bind_ip_all
+    ports:
+      - "27017:27017"  # Host:Container
+
+  mongo2:
+    image: mongo:6
+    container_name: mongo2
+    networks:
+      - shared
+    command: mongod --replSet rs0 --bind_ip_all
+    ports:
+      - "27018:27017"  # Expose on a different host port
+
+networks:
+  shared:
+    external: true

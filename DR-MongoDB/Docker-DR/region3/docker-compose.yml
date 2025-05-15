@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  mongo7:
+    image: mongo:6
+    container_name: mongo5
+    networks:
+      - shared
+    command: mongod --replSet rs0 --bind_ip_all
+    ports:
+      - "27021:27017"  # Expose mongo7 on host port 27021
+
+networks:
+  shared:
+    external: true
