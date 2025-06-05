@@ -1,0 +1,27 @@
+1. Please run the command to install the required packages:
+
+pip install -r requirements.txt
+
+2. Please run the command to start the application from app.py
+
+streamlit run app.py
+
+Once you will run this command it will open the browser with the application.
+
+# 3. Please upload the PDF file and click on the "Process PDF" button to process the PDF file.
+
+# 4. After processing the PDF, you can ask questions related to the content of the PDF.
+
+# 5. The application will return the answer to your question based on the content of the PDF.
+
+# 6. You can ask multiple questions and the application will return the answers based on the content of the PDF.
+
+# 7. You can also reset the application by clicking on the "Reset" button.
+
+# 8. The application will also display the PDF file name and the number of pages in the PDF file.
+
+# 9. The application will also display the number of documents in the knowledge base.
+
+# 10. The application will also display the number of questions asked and the number of answers returned.
+
+# 11. The application will also display the number of documents in the knowledge base.

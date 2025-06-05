@@ -1,0 +1,5 @@
+llm_model: "llama3"
+embedding_model: "nomic-embed-text"
+mongo_connection_str: "mongodb+srv://admin:admin@cluster0.n2msm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+database_name: "knowledge_base"
+collection_name: "documents"
