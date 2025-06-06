@@ -1,27 +1,50 @@
-1. Please run the command to install the required packages:
+# 📄 ChatPDF with MongoDB Atlas and LangChain
 
+ChatPDF is a Streamlit-based application that allows users to upload PDF files, process their content using LangChain and MongoDB Atlas, and ask questions based on the document using an LLM-powered interface.
+
+---
+
+## 🚀 Getting Started
+
+Follow these steps to run the application locally.
+
+### ✅ Step 1: Install Dependencies
+
+```bash
 pip install -r requirements.txt
 
-2. Please run the command to start the application from app.py
+
+### ✅ Step 2: Start the Application
 
 streamlit run app.py
 
-Once you will run this command it will open the browser with the application.
 
-# 3. Please upload the PDF file and click on the "Process PDF" button to process the PDF file.
+## 📂 Project Structure
 
-# 4. After processing the PDF, you can ask questions related to the content of the PDF.
+├── app.py # Streamlit app file (main UI logic)
+├── chat_pdf.py # Core RAG logic using LangChain and MongoDB
+├── config.yaml # Configuration file (models, DB connection)
+├── requirements.txt # Python dependencies
+└── README.md # Project documentation
 
-# 5. The application will return the answer to your question based on the content of the PDF.
 
-# 6. You can ask multiple questions and the application will return the answers based on the content of the PDF.
+## 📝 How to Use
 
-# 7. You can also reset the application by clicking on the "Reset" button.
+### 📤 Upload a PDF file
+Use the file uploader in the Streamlit UI to select a PDF file.
 
-# 8. The application will also display the PDF file name and the number of pages in the PDF file.
+### ⚙️ Click "Process PDF"
+This processes the PDF: extracts, chunks, embeds content, and stores it in MongoDB Atlas.
 
-# 9. The application will also display the number of documents in the knowledge base.
+### ❓ Ask Questions
+After processing, type in questions related to the content of the uploaded PDF.
 
-# 10. The application will also display the number of questions asked and the number of answers returned.
+### ✅ Get Answers
+The LLM will return context-aware answers based on the embedded document content.
 
-# 11. The application will also display the number of documents in the knowledge base.
+### 🔁 Ask Multiple Questions
+Continue the conversation by asking more questions about the PDF.
+
+### 🔄 Reset the App
+Click the **"Reset"** button to clear all session data and start over.
+```
