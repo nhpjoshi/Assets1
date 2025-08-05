@@ -3,8 +3,8 @@ const urllib = require("urllib");
 
 const baseUrl =
   "https://cloud.mongodb.com/api/atlas/v2/groups/65afa10de7cfa50a87ebf807/clusters";
-const ATLAS_USER = "";
-const ATLAS_USER_KEY = "";
+const ATLAS_USER = "jyvaogjf";
+const ATLAS_USER_KEY = "5d2cc776-f862-4b9b-b3b3-a389553352b2";
 
 const options = {
   digestAuth: `${ATLAS_USER}:${ATLAS_USER_KEY}`,

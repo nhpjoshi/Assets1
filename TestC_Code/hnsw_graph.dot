@@ -1,0 +1,19 @@
+digraph HNSW {
+  rankdir=LR;
+  node [shape=circle, style=filled, fillcolor=lightyellow];
+  subgraph cluster_2 {
+    label="Level 2";
+    style=dashed;
+    n0 [label="0"];
+  }
+  subgraph cluster_1 {
+    label="Level 1";
+    style=dashed;
+    n0 [label="0"];
+  }
+  subgraph cluster_0 {
+    label="Level 0";
+    style=dashed;
+    n0 [label="0"];
+  }
+}

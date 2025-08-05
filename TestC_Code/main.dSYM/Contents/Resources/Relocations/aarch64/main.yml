@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/nitish.joshi/Documents/Mongo_Lib/Assets/TestC_Code/main'
+relocations:     []
+...

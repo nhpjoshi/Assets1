@@ -6,7 +6,7 @@ const app = express();
 const GenAIIP = "192.168.1.5";
 
 const mongoUri =
-  "mongodb+srv://<>:<>@cluster0.n2msm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+  "mongodb+srv://admin:admin@cluster0.n2msm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const port = 3000;
 app.use(cors());
 app.use(express.json());
@@ -15,6 +15,9 @@ var db1 = "Aisurance";
 var coll = "BMSearch";
 var namespace = `${db}.${coll}`;
 const keyVaultNamespace = "encryption.__keyVault";
+
+
+
 // const extraOptions = {
 //   cryptSharedLibRequired: true,
 //   cryptSharedLibPath:
