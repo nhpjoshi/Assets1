@@ -14,9 +14,7 @@ db.games.dropIndex("score_1_gamertag_1");
 //3 Docscal
 db.games.createIndex({ gamertag: 1, score: 1 });
 db.games.find({ gamertag: "Ace", score: { $gt: 9000 } });
-db.games
-  .find({ gamertag: "Ace", score: { $gt: 9000 } })
-  .explain("executionStats").executionStats;
+db.games.find({ gamertag: "Ace", score: { $gt: 9000 } }).explain("executionStats").executionStats;
 db.games.dropIndex("gamertag_1_score_1");
 
 //(E → S) Equality before Range

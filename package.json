@@ -1,5 +1,10 @@
 {
   "dependencies": {
-    "kafkajs": "^2.2.4"
+    "@faker-js/faker": "^9.9.0",
+    "digest-fetch": "^3.1.1",
+    "kafkajs": "^2.2.4",
+    "mongodb": "^6.18.0",
+    "node-fetch": "^3.3.2",
+    "urllib": "^4.8.1"
   }
 }
