@@ -139,7 +139,7 @@ seedDatabase();
 //// If you haven’t already named them, create with explicit names:
 // db.employees.createIndex({ dateOfJoining: 1,  salary: -1 }, { name: "doj_1_salary_-1" })
 // db.employees.createIndex({ dateOfJoining: -1, salary:  1 }, { name: "doj_-1_salary_1" })
-// db.employees.createIndex({ salary: 1 },                      { name: "salary_1" })
+// db.employees.createIndex({ salary: 1 },{ name: "salary_1" })
 
 // db.employees.find({ dateOfJoining: { $gte: ISODate("2023-01-01"), $lt: ISODate("2024-01-01") } },{ _id: 0, dateOfJoining: 1, salary: 1 }).sort({ dateOfJoining: 1, salary: -1 }).explain("executionStats")
 

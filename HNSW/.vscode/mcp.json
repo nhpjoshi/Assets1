@@ -1,0 +1,23 @@
+{
+	"servers": {
+		"my-mcp-server-d974fea1": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"mongodb-mcp-server"
+			]
+		},
+		"my-mcp-server-5e3076fa": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+        "-y",
+        "mongodb-mcp-server",
+        "--connectionString",
+        "mongodb+srv://admin:admin@cluster0.n2msm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+      ]
+		}
+	},
+	"inputs": []
+}

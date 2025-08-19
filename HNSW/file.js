@@ -102,9 +102,8 @@ class HNSW {
           const sim = this.cosineSimilarity(
             query,
             this.nodes[neighborId].vector
-           
           );
-           console.log(sim))
+          console.log(sim);
           const angle = this.angleDegrees(sim);
           console.log(
             `    Comparing with Node ${neighborId} → Similarity: ${sim.toFixed(

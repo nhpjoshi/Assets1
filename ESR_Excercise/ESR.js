@@ -11,6 +11,8 @@ db.games.createIndex({ score: 1, gamertag: 1 });
 db.games.find({ gamertag: "Ace", score: { $gt: 9000 } });
 db.games.find({ gamertag: "Ace", score: { $gt: 9000 } }).explain("executionStats").executionStats;
 db.games.dropIndex("score_1_gamertag_1");
+
+//QueryTargeting = documentsExamined / nreturned = 3
 //3 Docscal
 db.games.createIndex({ gamertag: 1, score: 1 });
 db.games.find({ gamertag: "Ace", score: { $gt: 9000 } });
@@ -39,3 +41,7 @@ db.games.dropIndex("score_1_gamertag_1");
 
 db.games.createIndex({ score: 1 });
 db.games.find({ score: { $gt: 9000 } }).sort({ gamertag: 1 }).explain("executionStats").executionStats;
+
+
+
+//QueryTargeting = documentsExamined / nreturned = 3

@@ -2,7 +2,7 @@ const { Kafka, logLevel } = require("kafkajs");
 
 // === CONFIG ===
 const BROKERS = ["34.31.13.135:9092"];
-const TOPIC = "topic_IoT1";
+const TOPIC = "topic_IoT2";
 const ENDIAN = "BE"; // "BE" for big-endian (C code style), "LE" for little-endian
 const USERNAME = "brokerUser";
 const PASSWORD = "brokerPass";
