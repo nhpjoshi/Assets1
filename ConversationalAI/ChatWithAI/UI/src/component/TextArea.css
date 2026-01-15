@@ -1,85 +1,94 @@
-/* src/component/TextArea.css */
+/* ================================
+   BASE TEXT AREA
+================================ */
 
-/* Ensures the text area is scrollable without visible borders */
 .invisible-textarea {
   resize: none;
   overflow-y: auto;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-x: hidden;
   background-color: #f8f9fa;
   border: 1px solid #ced4da;
-  border-radius: 0.25rem;
-  padding: 1rem;
+  border-radius: 6px;
+  padding: 16px;
   font-family: "Courier New", Courier, monospace;
   font-size: 14px;
   line-height: 1.5;
-  min-height: 100px; /* Default height */
-  max-height: 300px; /* Maximum height */
-  max-width: 50%; /* Prevent horizontal expansion */
-  width: 100%; /* Ensure it stays within the container */
-  white-space: pre-wrap; /* Wrap text */
-  word-wrap: break-word; /* Break long words */
-  box-sizing: border-box; /* Include padding and border in width/height */
+
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  min-height: 120px;
+  max-height: 300px;
+
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
-/* Styles for formatted text container */
+/* ================================
+   FORMATTED TEXT CONTAINER
+================================ */
+
+.textarea-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .formatted-text-container {
-  height: 100%; /* Adjust height as needed */
-  padding: 30px 10px; /* Add consistent padding around the text */
-  margin-left: 0; /* Remove extra left margin */
-  width: calc(100% - 55px); /* Ensure consistent width */
-  box-sizing: border-box; /* Include padding and border in width/height */
-  background-color: #fffffffb; /* Optional: Add background color */
-  border: 1px solid #fffffffb; /* Optional: Add border for clarity */
-  border-radius: 5px; /* Optional: Round corners */
-  max-width: 1440px; /* Prevent horizontal expansion */
-  width: 100%; /* Ensure it stays within the container */
-  white-space: normal; /* Ensure text wraps to the next line */
-  word-break: break-word; /* Break long words, like URLs, if necessary */
-  overflow-y: auto; /* Enable vertical scrolling if content overflows */
-  overflow-x: hidden; /* Prevent horizontal scrolling entirely */
+  width: 100%;
+  max-width: 100%;
+  height: 55vh;          /* controls conversation height */
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-sizing: border-box;
 }
 
 
-/* Read-only mode styles */
+/* Read-only mode */
 .formatted-text-container.read-only {
   background-color: #ffffff;
-  cursor: not-allowed;
-  white-space: normal; /* Ensure text wraps to the next line */
-  word-break: break-word; /* Break long words, like URLs, if necessary */
-  overflow-y: auto; /* Enable vertical scrolling if content overflows */
-  overflow-x: hidden; /* Prevent horizontal scrolling entirely */
- 
+  cursor: default;
 }
 
-/* Code block styling */
+/* ================================
+   CODE BLOCKS
+================================ */
+
 .code-container {
   position: relative;
   background-color: #f1f1f1;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  margin: 1rem 0;
-  padding: 0.75rem;
+  border-radius: 6px;
+  margin: 12px 0;
+  padding: 12px;
+
   font-family: "Courier New", Courier, monospace;
- 
+
+  max-width: 100%;
+  overflow-x: auto; /* allow horizontal scroll INSIDE code only */
 }
 
-/* Code block content */
 .code-block {
   margin: 0;
-  padding: 0;
   white-space: pre;
 }
 
-/* Copy button styling */
+/* Copy button */
 .copy-button {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 6px;
+  right: 6px;
+
   background-color: #007bff;
   border: none;
   color: white;
-  padding: 5px 10px;
-  border-radius: 3px;
+  padding: 4px 8px;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
 }
@@ -88,37 +97,13 @@
   background-color: #0056b3;
 }
 
-/* Align the entire container to right-to-left */
-.formatted-text-container {
-  direction: rtl; /* Set text direction to right-to-left */
-  text-align: right; /* Align content to the right */
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  overflow-y: auto;
-  max-height: calc(100% - 1rem);
-}
+/* ================================
+   REGULAR TEXT
+================================ */
 
-/* Code block alignment inside right-to-left */
-.code-container {
-  direction: ltr; /* Keep code blocks left-to-right */
-  text-align: left; /* Align code to the left */
-  background-color: #f1f1f1;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin: 1rem 0;
-  padding: 0.75rem;
-  font-family: "Courier New", Courier, monospace;
-  overflow-x: hidden;
-}
-
-/* Regular text styling for better readability */
 .formatted-text {
-  direction: ltr; /* Ensure text respects right-to-left alignment */
-  text-align: left;
-  margin-bottom: 0.5;
-  white-space: normal; 
-  word-break: break-word; /* Break long words, like URLs, if necessary */
-  overflow-y: auto; /* Enable vertical scrolling if content overflows */
-  overflow-x: hidden; /* Prevent horizontal scrolling entirely */
-  
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  margin-bottom: 8px;
 }

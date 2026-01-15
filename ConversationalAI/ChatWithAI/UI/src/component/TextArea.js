@@ -94,18 +94,18 @@ const TextArea = ({ value, readOnly, rows, placeholder }) => {
     return elements;
   };
 
-  return (
-    <div className="form-group mt-3">
-      <div
-        ref={textAreaRef}
-        className="formatted-text-container"
-        style={{ overflowY: "auto", height: rows * 24 }}
-        readOnly={readOnly}
-      >
-        {renderContent()}
-      </div>
+ return (
+  <div className="form-group mt-3 textarea-wrapper">
+    <div
+      ref={textAreaRef}
+      className="formatted-text-container"
+      aria-readonly={readOnly}
+    >
+      {renderContent()}
     </div>
-  );
+  </div>
+);
+
 };
 
 TextArea.propTypes = {

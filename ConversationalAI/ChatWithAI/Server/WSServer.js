@@ -1,42 +1,65 @@
-// Import required modules
+/**
+ * server.js
+ * TRUE streaming WebSocket server for Ollama
+ */
+
 const WebSocket = require("ws");
 const axios = require("axios");
 
-// Set up WebSocket server on port 3000
-const wss = new WebSocket.Server({ port: 4000 });
+const PORT = 4000;
+const OLLAMA_URL = "http://localhost:11434/api/chat";
+const MODEL = "llama3";
+
+const wss = new WebSocket.Server({ port: PORT });
+
+console.log(`🧠 Streaming WS server on ws://localhost:${PORT}`);
 
 wss.on("connection", (ws) => {
-  console.log("Client connected");
+  console.log("🔌 Client connected");
 
-  // Handle incoming WebSocket messages
-  ws.on("message", async (message) => {
+  ws.on("message", async (raw) => {
+    const { messages } = JSON.parse(raw.toString());
+
     try {
-      // Parse the JSON message from the client
-      const requestData = JSON.parse(message);
-      const { model, prompt, stream } = requestData;
-
-      // Send request to Llama's API with model, prompt, and stream
       const response = await axios.post(
-        "http://host.docker.internal:11434/api/generate",
+        OLLAMA_URL,
         {
-          model: model || "llama3:8b", // default model if not specified
-          prompt: prompt,
-          stream: stream || false, // default stream to false if not specified
-        }
+          model: MODEL,
+          messages,
+          stream: true,
+        },
+        { responseType: "stream" }
       );
 
-      // Send the Llama response back to the WebSocket client
-      ws.send(JSON.stringify(response.data));
-    } catch (error) {
-      console.error("Error communicating with Llama:", error);
-      ws.send(JSON.stringify({ error: "Error communicating with Llama" }));
+      response.data.on("data", (chunk) => {
+        const lines = chunk
+          .toString()
+          .split("\n")
+          .filter(Boolean);
+
+        for (const line of lines) {
+          const data = JSON.parse(line);
+
+          if (data.message?.content) {
+            ws.send(
+              JSON.stringify({
+                type: "token",
+                content: data.message.content,
+              })
+            );
+          }
+
+          if (data.done) {
+            ws.send(JSON.stringify({ type: "done" }));
+          }
+        }
+      });
+
+    } catch (err) {
+      console.error("❌ Ollama streaming error:", err.message);
+      ws.send(JSON.stringify({ type: "error" }));
     }
   });
 
-  // Handle WebSocket disconnection
-  ws.on("close", () => {
-    console.log("Client disconnected");
-  });
+  ws.on("close", () => console.log("❌ Client disconnected"));
 });
-
-console.log("WebSocket server is running on ws://localhost:4000");

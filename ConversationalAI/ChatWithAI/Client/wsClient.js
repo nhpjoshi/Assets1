@@ -1,84 +1,83 @@
-// Import the WebSocket and readline modules
+/**
+ * client.js
+ * CLI client that talks to server.js over WebSocket
+ */
+
 const WebSocket = require("ws");
 const readline = require("readline");
 
-// Set up readline interface for terminal input
+const WS_URL = "ws://localhost:4000";
+const MODEL = "llama3";
+
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
-// Initialize conversation history
-let conversationHistory = "";
+// Conversation history as Ollama expects
+const messages = [];
 
-// Connect to the WebSocket server
-const ws = new WebSocket("ws://192.168.65.254:4000");
+const ws = new WebSocket(WS_URL);
 
-ws.onopen = () => {
-  console.log("Connected to WebSocket server");
-
-  // Function to prompt user for input and send message to the server
-  const promptUser = () => {
-    rl.question(
-      "Enter the prompt for Llama (or type 'exit' to quit): ",
-      (inputPrompt) => {
-        if (inputPrompt.toLowerCase() === "exit") {
-          console.log("Closing connection...");
-          ws.close();
-          rl.close();
-          return;
-        }
-
-        // Update conversation history with the latest user prompt
-        conversationHistory += `User: ${inputPrompt}\n`;
-
-        // Prepare the message with model, the entire conversation history, and stream option
-        const message = {
-          model: "llama3:8b", // model name
-          prompt: conversationHistory, // send the whole conversation history as the prompt
-          stream: false, // stream option
-        };
-
-        // Send the message to the WebSocket server
-        ws.send(JSON.stringify(message));
-        console.log("Message sent to Llama");
-      }
-    );
-  };
-
-  // Start the initial prompt
+ws.on("open", () => {
+  console.log("🧠 Connected to LLaMA (via WebSocket)");
+  console.log("Type your message (or 'exit' to quit)\n");
   promptUser();
+});
 
-  // Handle incoming messages from the server
-  ws.onmessage = (event) => {
-    try {
-      // Parse the received data
-      const data = JSON.parse(event.data);
+ws.on("message", (raw) => {
+  let data;
 
-      // Display only the response field if it exists and update conversation history
-      if (data.response) {
-        console.log("Response from Llama:", data.response);
+  try {
+    data = JSON.parse(raw.toString());
+  } catch (err) {
+    console.error("Invalid response from server");
+    promptUser();
+    return;
+  }
 
-        // Append Llama's response to the conversation history
-        conversationHistory += `Llama: ${data.response}\n`;
-      } else {
-        console.log("Unexpected response format:", data);
-      }
-    } catch (error) {
-      console.error("Error parsing response:", error);
+  if (data.error) {
+    console.error("❌ Error:", data.error);
+    promptUser();
+    return;
+  }
+
+  console.log("\nLLaMA:", data.response, "\n");
+
+  messages.push({
+    role: "assistant",
+    content: data.response,
+  });
+
+  promptUser();
+});
+
+ws.on("close", () => {
+  console.log("🔌 Disconnected from server");
+  rl.close();
+});
+
+ws.on("error", (err) => {
+  console.error("WebSocket error:", err.message);
+});
+
+function promptUser() {
+  rl.question("You: ", (input) => {
+    if (input.toLowerCase() === "exit") {
+      ws.close();
+      return;
     }
 
-    // Prompt user again after receiving the response
-    promptUser();
-  };
-};
+    messages.push({
+      role: "user",
+      content: input,
+    });
 
-// Handle WebSocket connection close
-ws.onclose = () => {
-  console.log("Disconnected from WebSocket server");
-};
-
-// Handle WebSocket errors
-ws.onerror = (error) => {
-  console.error("WebSocket error:", error);
-};
+    ws.send(
+      JSON.stringify({
+        model: MODEL,
+        messages,
+      })
+    );
+  });
+}

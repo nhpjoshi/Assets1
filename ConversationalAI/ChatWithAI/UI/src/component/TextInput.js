@@ -3,10 +3,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const TextInput = ({ value, onChange, onEnter }) => {
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
+const TextInput = ({ value, onChange, onEnter, placeholder }) => {
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
       onEnter();
     }
   };
@@ -14,14 +13,19 @@ const TextInput = ({ value, onChange, onEnter }) => {
   return (
     <input
       type="text"
+      className="form-control"
       value={value}
       onChange={onChange}
-      onKeyDown={handleKeyDown} // Add keydown event handler
-      className="form-control"
-      placeholder="Enter your question here"
+      onKeyDown={handleKeyDown}
+      placeholder={placeholder}
+      style={{
+        width: "100%",
+        boxSizing: "border-box",
+      }}
     />
   );
 };
+
 
 TextInput.propTypes = {
   value: PropTypes.string.isRequired,
