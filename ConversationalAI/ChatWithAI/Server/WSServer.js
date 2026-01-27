@@ -14,7 +14,7 @@ const OLLAMA_URL = "http://localhost:11434/api/chat";
 const MODEL = "llama3";
 
 const MCP_SERVER_PATH =
-  "/Users/nitish.joshi/Documents/GitHub/Assets1/mongodb-atlas-mcp/test-atlas.mjs";
+  "/Users/nitish.joshi/Documents/GitHub/Assets/Assets1/mongodb-atlas-mcp/test-atlas.mjs";
 
 /* ================= TOOL PROMPT ================= */
 

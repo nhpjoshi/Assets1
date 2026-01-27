@@ -4,6 +4,7 @@
  * - Schema-safe
  * - Inspector-safe
  * - Claude-safe
+ * - Now with cluster creation
  */
 
 import DigestClient from "digest-fetch";
@@ -62,9 +63,14 @@ function safeText(value) {
   }
 }
 
-async function fetchJson(url) {
+async function fetchJson(url, options = {}) {
   const res = await client.fetch(url, {
-    headers: { Accept: ATLAS_ACCEPT },
+    headers: { 
+      Accept: ATLAS_ACCEPT,
+      "Content-Type": "application/json",
+      ...options.headers
+    },
+    ...options,
   });
 
   const body = await res.text().catch(() => "");
@@ -121,6 +127,23 @@ async function getMeasurements(processName, granularity, period) {
   }
 
   return data.measurements ?? [];
+}
+
+async function createCluster(clusterConfig) {
+  console.error("[INFO] Creating new Atlas cluster");
+
+  const url = `https://cloud.mongodb.com/api/atlas/v2/groups/${GROUP_ID}/clusters`;
+  
+  const data = await fetchJson(url, {
+    method: "POST",
+    body: JSON.stringify(clusterConfig),
+  });
+
+  if (data.error) {
+    return { error: "Failed to create cluster", details: data };
+  }
+
+  return data;
 }
 
 /* =====================================================
@@ -193,6 +216,65 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           required: ["processName"],
         },
       },
+      {
+        name: "create_cluster",
+        description:
+          "Create a new MongoDB Atlas cluster. Requires cluster configuration including name, provider, region, and instance size.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            name: {
+              type: "string",
+              description: "Name of the cluster (must be unique in project)",
+            },
+            clusterType: {
+              type: "string",
+              description: "Type of cluster (REPLICASET, SHARDED, GEOSHARDED)",
+              default: "REPLICASET",
+            },
+            providerName: {
+              type: "string",
+              description: "Cloud provider (AWS, GCP, AZURE, TENANT)",
+              default: "AWS",
+            },
+            regionName: {
+              type: "string",
+              description: "Cloud provider region (e.g., US_EAST_1, EU_WEST_1)",
+              default: "US_EAST_1",
+            },
+            instanceSizeName: {
+              type: "string",
+              description: "Instance size (e.g., M10, M20, M30, M40)",
+              default: "M10",
+            },
+            mongoDBMajorVersion: {
+              type: "string",
+              description: "MongoDB version (e.g., 7.0, 6.0)",
+              default: "7.0",
+            },
+            diskSizeGB: {
+              type: "number",
+              description: "Disk size in GB (minimum varies by instance size)",
+            },
+            backupEnabled: {
+              type: "boolean",
+              description: "Enable automated backups",
+              default: true,
+            },
+            autoScalingDiskGBEnabled: {
+              type: "boolean",
+              description: "Enable disk auto-scaling",
+              default: true,
+            },
+            autoScalingComputeEnabled: {
+              type: "boolean",
+              description: "Enable compute auto-scaling",
+              default: false,
+            },
+          },
+          required: ["name"],
+        },
+      },
     ],
   };
 });
@@ -255,6 +337,80 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           {
             type: "text",
             text: safeText(utilization),
+          },
+        ],
+      };
+    }
+
+    if (name === "create_cluster") {
+      if (!args.name) {
+        return {
+          content: [
+            {
+              type: "text",
+              text: "Error: Cluster name is required",
+            },
+          ],
+        };
+      }
+
+      // Build cluster configuration
+      const clusterConfig = {
+        name: args.name,
+        clusterType: args.clusterType ?? "REPLICASET",
+        providerSettings: {
+          providerName: args.providerName ?? "AWS",
+          regionName: args.regionName ?? "US_EAST_1",
+          instanceSizeName: args.instanceSizeName ?? "M10",
+        },
+        mongoDBMajorVersion: args.mongoDBMajorVersion ?? "7.0",
+        backupEnabled: args.backupEnabled ?? true,
+        autoScaling: {
+          diskGBEnabled: args.autoScalingDiskGBEnabled ?? true,
+          compute: {
+            enabled: args.autoScalingComputeEnabled ?? false,
+          },
+        },
+      };
+
+      // Add optional disk size if specified
+      if (args.diskSizeGB) {
+        clusterConfig.diskSizeGB = args.diskSizeGB;
+      }
+
+      const result = await createCluster(clusterConfig);
+
+      if (result.error) {
+        return {
+          content: [
+            {
+              type: "text",
+              text: safeText({
+                error: "Failed to create cluster",
+                details: result,
+              }),
+            },
+          ],
+        };
+      }
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: safeText({
+              success: true,
+              cluster: {
+                name: result.name,
+                id: result.id,
+                state: result.stateName,
+                mongoDBVersion: result.mongoDBVersion,
+                provider: result.providerSettings?.providerName,
+                region: result.providerSettings?.regionName,
+                instanceSize: result.providerSettings?.instanceSizeName,
+                connectionStrings: result.connectionStrings,
+              },
+            }),
           },
         ],
       };
