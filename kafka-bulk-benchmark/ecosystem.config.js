@@ -16,7 +16,7 @@ module.exports = {
         KAFKA_BROKERS: "localhost:9092",
         TOPICS: "customers,inventory,orders,payments,shipments",
         KAFKA_GROUP_ID: "mongo-burst-consumer",
-        MONGO_URI: "mongodb+srv://admin:admin@cluster1.n2msm.mongodb.net",
+        MONGO_URI: "",
         MONGO_DB: "benchdb",
         MONGO_BURST_SIZE: "5000",
         MONGO_BURST_MAX_WAIT_MS: "5000"
