@@ -72,7 +72,7 @@ spring.data.mongodb.max-wait-time=120000
 ```
 
 ### Transaction Support
-- MongoDB transactions enabled via `MongoTransactionManager`
+- MongoDB transactions enabled via `MongoTransactionManager` // Why we are using it ?
 - Supports multi-document transactions for consistency
 
 ---
@@ -113,7 +113,7 @@ spring.data.mongodb.max-wait-time=120000
 | `description` | String | No | No | Description |
 | `categories` | Array[String] | No | No | Categories (for products only) |
 | `images` | Array[String] | No | No | Image URLs |
-| `attributes` | Object | No | No | Custom attributes (key-value pairs) |
+| `attributes` | Object | No | No | Custom attributes (key-value pairs) | How deep this custom attribute can go ?
 | `url` | String | No | No | URL (optional) |
 | `defaultPrice` | String | No | No | Default price code for the plan (PLAN only) |
 | `currency` | String | No | No | Currency code (ISO 4217, e.g., "usd", "eur", "inr") (PRICE only) |
@@ -522,7 +522,7 @@ spring.data.mongodb.max-wait-time=120000
 
 ---
 
-### 6. Quote Line Item Collection
+### 6. Quote Line Item Collection. // Why you need this as separate collection , how big it can go ?
 
 **Collection Name:** `quote_line_items`
 
