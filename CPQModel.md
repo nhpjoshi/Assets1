@@ -922,14 +922,14 @@ db.taxes.createIndex({ productId: 1, region: 1, active: 1, effectiveFrom: 1, eff
                ▼
 ┌──────────────────────────────┐
 │      Quote Line Item          │
-│  (Separate Collection)        │
+│  (Separate Collection)        │       
 └──────────────────────────────┘
                │
                │ 1:N
                ▼
 ┌──────────────────────────────┐
 │      Quote Version            │
-│  (Version History)            │
+│  (Version History)            │// It is growing very fast -- Archiving 
 └──────────────────────────────┘
 
 ┌─────────────┐         ┌─────────────┐
