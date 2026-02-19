@@ -1,4 +1,4 @@
-# CPQ System - MongoDB Data Model Documentation
+x# CPQ System - MongoDB Data Model Documentation
 
 **Version:** 3.0  
 **Date:** February 2025  
@@ -522,7 +522,7 @@ spring.data.mongodb.max-wait-time=120000
 
 ---
 
-### 6. Quote Line Item Collection. // Why you need this as separate collection , how big it can go ?
+### 6. Quote Line Item Collection. // Why you need this as separate collection , how big it can go ? -- Separate collection as it can grow big and can be bottle neck in the future 
 
 **Collection Name:** `quote_line_items`
 
