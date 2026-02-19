@@ -269,7 +269,7 @@ spring.data.mongodb.max-wait-time=120000
   "ruleType": "TIERED",
   "productId": "PROD-001",
   "priceListId": "STANDARD",
-  "priority": 10,
+  "priority": 10,   // Add API bounds on it if possible 
   "tiers": [
     {
       "minQuantity": 1,
