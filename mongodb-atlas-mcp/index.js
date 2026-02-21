@@ -174,3 +174,6 @@ const transport = new StdioServerTransport();
 console.error("[INFO] Starting MongoDB Atlas MCP server...");
 await server.connect(transport);
 console.error("[INFO] MCP server started and waiting for agent...");
+
+
+
