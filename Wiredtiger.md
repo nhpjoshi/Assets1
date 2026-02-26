@@ -1401,3 +1401,4 @@ db.serverStatus().wiredTiger
 **Document Version:** 1.0  
 **Last Updated:** February 2026  
 **Author:** Comprehensive WiredTiger Tuning Guide
+**ErrorCodes:** : https://www.mongodb.com/docs/manual/reference/error-codes/#std-label-server-error-codes
