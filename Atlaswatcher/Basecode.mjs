@@ -1,9 +1,9 @@
 // Basecode.mjs
 import DigestClient from "digest-fetch";
 
-const publicKey = "jyvaogjf";
-const privateKey = "5d2cc776-f862-4b9b-b3b3-a389553352b2";
-const groupId = "65afa10de7cfa50a87ebf807";
+const publicKey = "";
+const privateKey = "";
+const groupId = "";
 const ATLAS_ACCEPT = "application/vnd.atlas.2025-03-12+json"; // required API version
 
 const client = new DigestClient(publicKey, privateKey);
