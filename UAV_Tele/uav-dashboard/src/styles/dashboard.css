@@ -1,0 +1,34 @@
+.container {
+padding: 20px;
+font-family: Arial;
+background: #f5f6f8;
+}
+
+.header {
+display: flex;
+justify-content: space-between;
+margin-bottom: 20px;
+}
+
+.metrics {
+display: flex;
+gap: 15px;
+}
+
+.card {
+background: white;
+padding: 15px;
+border-radius: 12px;
+}
+
+.main {
+display: flex;
+margin-top: 20px;
+}
+
+.side {
+margin-left: 20px;
+display: flex;
+flex-direction: column;
+gap: 15px;
+}
