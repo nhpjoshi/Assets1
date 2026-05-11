@@ -446,3 +446,6 @@ console.error("[BOOT] Starting MongoDB Atlas MCP server");
 const transport = new StdioServerTransport();
 await server.connect(transport);
 console.error("[BOOT] MCP server connected and waiting");
+
+
+
