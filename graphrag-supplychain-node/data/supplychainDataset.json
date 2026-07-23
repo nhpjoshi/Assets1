@@ -1,0 +1,647 @@
+{
+  "nodes": [
+    {
+      "_id": "supplier_001",
+      "type": "Supplier",
+      "name": "Meridian Steel Works",
+      "attributes": {
+        "country": "Germany",
+        "tier": 1,
+        "risk_score": 0.12
+      },
+      "text": "Meridian Steel Works is a Tier-1 supplier of structural steel and aluminum alloys based in Duisburg, Germany. Long-standing supplier with high reliability."
+    },
+    {
+      "_id": "supplier_002",
+      "type": "Supplier",
+      "name": "Pacific Rubber Co",
+      "attributes": {
+        "country": "Vietnam",
+        "tier": 2,
+        "risk_score": 0.28
+      },
+      "text": "Pacific Rubber Co supplies synthetic rubber compounds for gaskets and seals, based in Ho Chi Minh City, Vietnam. Tier-2 supplier feeding into component makers."
+    },
+    {
+      "_id": "supplier_003",
+      "type": "Supplier",
+      "name": "Andes Lithium Group",
+      "attributes": {
+        "country": "Chile",
+        "tier": 1,
+        "risk_score": 0.35
+      },
+      "text": "Andes Lithium Group mines and refines lithium carbonate for battery production, based in Antofagasta, Chile. Subject to periodic export regulation changes."
+    },
+    {
+      "_id": "supplier_004",
+      "type": "Supplier",
+      "name": "Nexon Circuits",
+      "attributes": {
+        "country": "Taiwan",
+        "tier": 1,
+        "risk_score": 0.42
+      },
+      "text": "Nexon Circuits is a Tier-1 semiconductor and PCB supplier based in Hsinchu, Taiwan. Supplies control boards to multiple product lines. Located in a typhoon-prone coastal region."
+    },
+    {
+      "_id": "supplier_005",
+      "type": "Supplier",
+      "name": "Baltic Glass Industries",
+      "attributes": {
+        "country": "Poland",
+        "tier": 2,
+        "risk_score": 0.15
+      },
+      "text": "Baltic Glass Industries manufactures tempered glass components, based in Gdansk, Poland. Tier-2 supplier with stable output."
+    },
+    {
+      "_id": "supplier_006",
+      "type": "Supplier",
+      "name": "Sahara Solar Materials",
+      "attributes": {
+        "country": "Morocco",
+        "tier": 2,
+        "risk_score": 0.3
+      },
+      "text": "Sahara Solar Materials produces photovoltaic-grade silicon wafers, based in Casablanca, Morocco. Growing supplier for renewable energy product lines."
+    },
+    {
+      "_id": "supplier_007",
+      "type": "Supplier",
+      "name": "Nippon Precision Motors",
+      "attributes": {
+        "country": "Japan",
+        "tier": 1,
+        "risk_score": 0.1
+      },
+      "text": "Nippon Precision Motors manufactures high-precision electric motors, based in Nagoya, Japan. Tier-1 supplier known for exceptional quality control."
+    },
+    {
+      "_id": "supplier_008",
+      "type": "Supplier",
+      "name": "Coastal Plastics Ltd",
+      "attributes": {
+        "country": "Malaysia",
+        "tier": 2,
+        "risk_score": 0.33
+      },
+      "text": "Coastal Plastics Ltd molds injection-plastic housings and enclosures, based in Penang, Malaysia. Operates near the Port of Penang."
+    },
+    {
+      "_id": "component_001",
+      "type": "Component",
+      "name": "Structural Steel Frame",
+      "attributes": {},
+      "text": "Structural Steel Frame: load-bearing chassis frame made of high-tensile steel."
+    },
+    {
+      "_id": "component_002",
+      "type": "Component",
+      "name": "Rubber Gasket Seal",
+      "attributes": {},
+      "text": "Rubber Gasket Seal: weatherproof synthetic rubber sealing component."
+    },
+    {
+      "_id": "component_003",
+      "type": "Component",
+      "name": "Lithium Battery Cell",
+      "attributes": {},
+      "text": "Lithium Battery Cell: rechargeable cell used in battery packs."
+    },
+    {
+      "_id": "component_004",
+      "type": "Component",
+      "name": "Control Board PCB",
+      "attributes": {},
+      "text": "Control Board PCB: main logic board with embedded microcontroller."
+    },
+    {
+      "_id": "component_005",
+      "type": "Component",
+      "name": "Tempered Glass Panel",
+      "attributes": {},
+      "text": "Tempered Glass Panel: impact-resistant glass panel for display housings."
+    },
+    {
+      "_id": "component_006",
+      "type": "Component",
+      "name": "Photovoltaic Wafer",
+      "attributes": {},
+      "text": "Photovoltaic Wafer: silicon wafer used in solar charging modules."
+    },
+    {
+      "_id": "component_007",
+      "type": "Component",
+      "name": "Precision Drive Motor",
+      "attributes": {},
+      "text": "Precision Drive Motor: brushless electric motor for mechanical actuation."
+    },
+    {
+      "_id": "component_008",
+      "type": "Component",
+      "name": "Injection-Molded Housing",
+      "attributes": {},
+      "text": "Injection-Molded Housing: outer plastic casing for device enclosures."
+    },
+    {
+      "_id": "component_009",
+      "type": "Component",
+      "name": "Sensor Array Module",
+      "attributes": {},
+      "text": "Sensor Array Module: multi-sensor board manufactured alongside control boards."
+    },
+    {
+      "_id": "product_001",
+      "type": "Product",
+      "name": "SolarCharge Portable Panel",
+      "attributes": {},
+      "text": "SolarCharge Portable Panel: a foldable consumer solar charging device."
+    },
+    {
+      "_id": "product_002",
+      "type": "Product",
+      "name": "UrbanMove E-Scooter",
+      "attributes": {},
+      "text": "UrbanMove E-Scooter: an electric scooter for last-mile urban transport."
+    },
+    {
+      "_id": "product_003",
+      "type": "Product",
+      "name": "HomeGuard Security Camera",
+      "attributes": {},
+      "text": "HomeGuard Security Camera: a smart home security camera with onboard sensors."
+    },
+    {
+      "_id": "product_004",
+      "type": "Product",
+      "name": "PowerCell Battery Pack",
+      "attributes": {},
+      "text": "PowerCell Battery Pack: a modular rechargeable battery pack for tools and devices."
+    },
+    {
+      "_id": "product_005",
+      "type": "Product",
+      "name": "IndustriBot Actuator Arm",
+      "attributes": {},
+      "text": "IndustriBot Actuator Arm: a robotic arm module used in factory automation."
+    },
+    {
+      "_id": "factory_001",
+      "type": "Factory",
+      "name": "Rotterdam Assembly Plant",
+      "attributes": {
+        "country": "Netherlands"
+      },
+      "text": "Rotterdam Assembly Plant: primary European assembly facility for mobility and robotics product lines."
+    },
+    {
+      "_id": "factory_002",
+      "type": "Factory",
+      "name": "Shenzhen Electronics Plant",
+      "attributes": {
+        "country": "China"
+      },
+      "text": "Shenzhen Electronics Plant: high-volume electronics assembly facility in Guangdong province."
+    },
+    {
+      "_id": "factory_003",
+      "type": "Factory",
+      "name": "Austin Solar Fabrication",
+      "attributes": {
+        "country": "USA"
+      },
+      "text": "Austin Solar Fabrication: dedicated fabrication line for solar charging products."
+    },
+    {
+      "_id": "warehouse_001",
+      "type": "Warehouse",
+      "name": "Rotterdam Central Warehouse",
+      "attributes": {
+        "country": "Netherlands"
+      },
+      "text": "Rotterdam Central Warehouse: regional storage hub for European-assembled goods."
+    },
+    {
+      "_id": "warehouse_002",
+      "type": "Warehouse",
+      "name": "Shenzhen Regional Warehouse",
+      "attributes": {
+        "country": "China"
+      },
+      "text": "Shenzhen Regional Warehouse: storage and export hub for electronics products."
+    },
+    {
+      "_id": "warehouse_003",
+      "type": "Warehouse",
+      "name": "Austin Distribution Warehouse",
+      "attributes": {
+        "country": "USA"
+      },
+      "text": "Austin Distribution Warehouse: storage hub for solar product exports."
+    },
+    {
+      "_id": "dc_001",
+      "type": "DistributionCenter",
+      "name": "North America DC",
+      "attributes": {
+        "country": "USA"
+      },
+      "text": "North America DC: final-mile distribution center serving US and Canada retailers."
+    },
+    {
+      "_id": "dc_002",
+      "type": "DistributionCenter",
+      "name": "Europe DC",
+      "attributes": {
+        "country": "Germany"
+      },
+      "text": "Europe DC: final-mile distribution center serving EU retailers."
+    },
+    {
+      "_id": "dc_003",
+      "type": "DistributionCenter",
+      "name": "APAC DC",
+      "attributes": {
+        "country": "Singapore"
+      },
+      "text": "APAC DC: final-mile distribution center serving Asia-Pacific retailers."
+    },
+    {
+      "_id": "customer_001",
+      "type": "Customer",
+      "name": "GreenGrid Retail",
+      "attributes": {
+        "country": "USA"
+      },
+      "text": "GreenGrid Retail: large US retail chain carrying solar and battery products."
+    },
+    {
+      "_id": "customer_002",
+      "type": "Customer",
+      "name": "UrbanTransit GmbH",
+      "attributes": {
+        "country": "Germany"
+      },
+      "text": "UrbanTransit GmbH: European mobility fleet operator purchasing e-scooters."
+    },
+    {
+      "_id": "customer_003",
+      "type": "Customer",
+      "name": "SecureHome Asia",
+      "attributes": {
+        "country": "Singapore"
+      },
+      "text": "SecureHome Asia: APAC smart-home distributor carrying security cameras."
+    },
+    {
+      "_id": "customer_004",
+      "type": "Customer",
+      "name": "FactoryTech Automation",
+      "attributes": {
+        "country": "USA"
+      },
+      "text": "FactoryTech Automation: industrial automation integrator purchasing robotic arms."
+    },
+    {
+      "_id": "shipment_001",
+      "type": "Shipment",
+      "name": "shipment_001",
+      "attributes": {
+        "status": "delayed"
+      },
+      "text": "Shipment of control board PCBs from Nexon Circuits to Rotterdam Assembly Plant, currently delayed."
+    },
+    {
+      "_id": "shipment_002",
+      "type": "Shipment",
+      "name": "shipment_002",
+      "attributes": {
+        "status": "in_transit"
+      },
+      "text": "Shipment of lithium battery cells from Andes Lithium Group to Shenzhen Electronics Plant, currently in transit."
+    },
+    {
+      "_id": "shipment_003",
+      "type": "Shipment",
+      "name": "shipment_003",
+      "attributes": {
+        "status": "delayed"
+      },
+      "text": "Shipment of finished goods from Shenzhen Regional Warehouse to North America DC, delayed due to a port strike."
+    },
+    {
+      "_id": "shipment_004",
+      "type": "Shipment",
+      "name": "shipment_004",
+      "attributes": {
+        "status": "on_time"
+      },
+      "text": "Shipment of photovoltaic wafers from Sahara Solar Materials to Austin Solar Fabrication, on schedule."
+    },
+    {
+      "_id": "risk_event_001",
+      "type": "RiskEvent",
+      "name": "Typhoon near Hsinchu, Taiwan",
+      "attributes": {
+        "severity": "severe"
+      },
+      "text": "A category-4 typhoon is forecast to make landfall near Hsinchu, Taiwan within 72 hours, threatening operations at semiconductor and PCB suppliers in the region, including Nexon Circuits."
+    },
+    {
+      "_id": "risk_event_002",
+      "type": "RiskEvent",
+      "name": "Port of Shenzhen labor strike",
+      "attributes": {
+        "severity": "moderate"
+      },
+      "text": "A labor strike at the Port of Shenzhen is delaying outbound container shipments from the Shenzhen Regional Warehouse by an estimated 5-7 days."
+    },
+    {
+      "_id": "risk_event_003",
+      "type": "RiskEvent",
+      "name": "Chilean lithium export quota change",
+      "attributes": {
+        "severity": "moderate"
+      },
+      "text": "Chile has announced new export quotas on lithium carbonate, potentially constraining supply from Andes Lithium Group over the next quarter."
+    }
+  ],
+  "edges": [
+    {
+      "from": "supplier_001",
+      "to": "component_001",
+      "type": "SUPPLIES"
+    },
+    {
+      "from": "supplier_002",
+      "to": "component_002",
+      "type": "SUPPLIES"
+    },
+    {
+      "from": "supplier_003",
+      "to": "component_003",
+      "type": "SUPPLIES"
+    },
+    {
+      "from": "supplier_004",
+      "to": "component_004",
+      "type": "SUPPLIES"
+    },
+    {
+      "from": "supplier_005",
+      "to": "component_005",
+      "type": "SUPPLIES"
+    },
+    {
+      "from": "supplier_006",
+      "to": "component_006",
+      "type": "SUPPLIES"
+    },
+    {
+      "from": "supplier_007",
+      "to": "component_007",
+      "type": "SUPPLIES"
+    },
+    {
+      "from": "supplier_008",
+      "to": "component_008",
+      "type": "SUPPLIES"
+    },
+    {
+      "from": "supplier_004",
+      "to": "component_009",
+      "type": "SUPPLIES"
+    },
+    {
+      "from": "component_006",
+      "to": "product_001",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_005",
+      "to": "product_001",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_008",
+      "to": "product_001",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_001",
+      "to": "product_002",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_007",
+      "to": "product_002",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_004",
+      "to": "product_002",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_003",
+      "to": "product_002",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_002",
+      "to": "product_002",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_004",
+      "to": "product_003",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_009",
+      "to": "product_003",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_008",
+      "to": "product_003",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_005",
+      "to": "product_003",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_003",
+      "to": "product_004",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_002",
+      "to": "product_004",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_008",
+      "to": "product_004",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_001",
+      "to": "product_005",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_007",
+      "to": "product_005",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_004",
+      "to": "product_005",
+      "type": "USED_IN"
+    },
+    {
+      "from": "component_009",
+      "to": "product_005",
+      "type": "USED_IN"
+    },
+    {
+      "from": "product_002",
+      "to": "factory_001",
+      "type": "MANUFACTURED_AT"
+    },
+    {
+      "from": "product_005",
+      "to": "factory_001",
+      "type": "MANUFACTURED_AT"
+    },
+    {
+      "from": "product_003",
+      "to": "factory_002",
+      "type": "MANUFACTURED_AT"
+    },
+    {
+      "from": "product_004",
+      "to": "factory_002",
+      "type": "MANUFACTURED_AT"
+    },
+    {
+      "from": "product_001",
+      "to": "factory_003",
+      "type": "MANUFACTURED_AT"
+    },
+    {
+      "from": "factory_001",
+      "to": "warehouse_001",
+      "type": "STORED_AT"
+    },
+    {
+      "from": "factory_002",
+      "to": "warehouse_002",
+      "type": "STORED_AT"
+    },
+    {
+      "from": "factory_003",
+      "to": "warehouse_003",
+      "type": "STORED_AT"
+    },
+    {
+      "from": "warehouse_001",
+      "to": "dc_002",
+      "type": "SHIPPED_TO"
+    },
+    {
+      "from": "warehouse_002",
+      "to": "dc_003",
+      "type": "SHIPPED_TO"
+    },
+    {
+      "from": "warehouse_002",
+      "to": "dc_001",
+      "type": "SHIPPED_TO"
+    },
+    {
+      "from": "warehouse_003",
+      "to": "dc_001",
+      "type": "SHIPPED_TO"
+    },
+    {
+      "from": "dc_001",
+      "to": "customer_001",
+      "type": "SUPPLIES_CUSTOMER"
+    },
+    {
+      "from": "dc_002",
+      "to": "customer_002",
+      "type": "SUPPLIES_CUSTOMER"
+    },
+    {
+      "from": "dc_003",
+      "to": "customer_003",
+      "type": "SUPPLIES_CUSTOMER"
+    },
+    {
+      "from": "dc_001",
+      "to": "customer_004",
+      "type": "SUPPLIES_CUSTOMER"
+    },
+    {
+      "from": "component_004",
+      "to": "shipment_001",
+      "type": "SHIPPED_VIA"
+    },
+    {
+      "from": "shipment_001",
+      "to": "factory_001",
+      "type": "ARRIVES_AT"
+    },
+    {
+      "from": "component_003",
+      "to": "shipment_002",
+      "type": "SHIPPED_VIA"
+    },
+    {
+      "from": "shipment_002",
+      "to": "factory_002",
+      "type": "ARRIVES_AT"
+    },
+    {
+      "from": "warehouse_002",
+      "to": "shipment_003",
+      "type": "SHIPPED_VIA"
+    },
+    {
+      "from": "shipment_003",
+      "to": "dc_001",
+      "type": "ARRIVES_AT"
+    },
+    {
+      "from": "component_006",
+      "to": "shipment_004",
+      "type": "SHIPPED_VIA"
+    },
+    {
+      "from": "shipment_004",
+      "to": "factory_003",
+      "type": "ARRIVES_AT"
+    },
+    {
+      "from": "risk_event_001",
+      "to": "supplier_004",
+      "type": "AFFECTS"
+    },
+    {
+      "from": "risk_event_002",
+      "to": "warehouse_002",
+      "type": "AFFECTS"
+    },
+    {
+      "from": "risk_event_003",
+      "to": "supplier_003",
+      "type": "AFFECTS"
+    }
+  ]
+}

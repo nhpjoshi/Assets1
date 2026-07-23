@@ -1,0 +1,22 @@
+{
+  "name": "graphrag-supplychain",
+  "version": "1.0.0",
+  "description": "GraphRAG for supply chain management on MongoDB Atlas (Node.js)",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "generate-data": "node data/generateData.js",
+    "ingest": "node src/ingest.js",
+    "start": "node app.js",
+    "examples": "node app.js --examples"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.0",
+    "dotenv": "^16.4.5",
+    "mongodb": "^6.8.0",
+    "voyageai": "^0.4.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
