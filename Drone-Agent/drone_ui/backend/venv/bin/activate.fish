@@ -29,7 +29,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/nitish.joshi/Downloads/drone_ui 12/backend/venv"
+set -gx VIRTUAL_ENV "/Users/nitish.joshi/Documents/Assets1/Drone-Agent/drone_ui/backend/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

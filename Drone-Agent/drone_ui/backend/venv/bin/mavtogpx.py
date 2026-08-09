@@ -1,4 +1,4 @@
-#!/Users/nitish.joshi/Downloads/drone_ui 12/backend/venv/bin/python3
+#!/Users/nitish.joshi/Documents/Assets1/Drone-Agent/drone_ui/backend/venv/bin/python3
 
 '''
 example program to extract GPS data from a mavlink log, and create a GPX

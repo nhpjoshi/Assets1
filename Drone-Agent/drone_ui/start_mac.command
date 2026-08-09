@@ -27,4 +27,4 @@ echo ""
 # actually ready to serve requests.
 ( sleep 2 && open "http://localhost:8765" ) &
 
-python3 -m uvicorn server:app --port 8765
+python3 -m uvicorn server:app --host 0.0.0.0 --port 8765

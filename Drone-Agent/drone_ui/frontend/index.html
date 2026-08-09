@@ -150,7 +150,14 @@
 
   <!-- Chat -->
   <section class="panel chat">
-    <h2>Ask the Assistant</h2>
+    <div class="panel-header">
+      <h2>Ask the Assistant</h2>
+      <button id="chat-clear" class="icon-btn" type="button" aria-label="Clear chat">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6" />
+        </svg>
+      </button>
+    </div>
     <div class="chat-log" id="chat-log">
       <div class="chat-msg system">Connect to a vehicle, then ask about GPS, battery, attitude, or say "RTL" / "loiter".</div>
     </div>

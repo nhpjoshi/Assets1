@@ -31,19 +31,49 @@ security warning the first time: right-click it → **Open** → confirm.
 That one-time step satisfies Gatekeeper for files not downloaded via the
 App Store; after that, plain double-clicking works.
 
+**Pin it to the Dock (macOS):** two ways -
+- **No setup:** drag `start_mac.command` straight from Finder onto the
+  right side of the Dock (past the divider) - clicking it there launches
+  it exactly like double-clicking.
+- **Real app icon:** `LabAtHome Ground Control.app` (also at the repo
+  root) is a proper macOS app bundle - drag it into `/Applications` (or
+  just leave it here and drag it to the Dock directly), and it'll launch
+  from the Dock/Launchpad like any other app. It still opens a visible
+  Terminal window underneath (running the same `start_mac.command`
+  logic) so you can see logs and stop the server by closing that window
+  - it's a thin wrapper for a nicer icon, not a fully native app. Same
+  Gatekeeper right-click-Open step applies the first time.
+  **Keep the `.app` in this same folder** (next to `start_mac.command`) -
+  it locates the project relative to its own position, so moving it
+  elsewhere on its own will break it.
+
 **Manual alternative**, if you'd rather run it from a terminal yourself:
 
 ```bash
 cd backend
 pip install -r requirements.txt
 # make sure `ollama serve` is running if you want the chat panel to work
-uvicorn server:app --reload --port 8765
+uvicorn server:app --reload --host 0.0.0.0 --port 8765
 ```
 
 Open `http://localhost:8765` — the backend now serves the dashboard
 itself (mounted as static files), so there's no separate frontend server
 to run. Enter your serial port / baud, tick "arm actions" only if you
 actually want RTL/LOITER/ALT_HOLD to reach the aircraft, and hit Connect.
+
+**Accessing it from another device (phone, etc.) over Tailscale:** the
+`--host 0.0.0.0` flag above is what makes this possible - it tells the
+server to accept connections from any network interface, not just this
+machine. Without it, even Tailscale traffic gets refused, since it still
+arrives as a network connection rather than literally from `localhost`.
+Once running, open `http://<this-mac's-tailscale-name>:8765` from any
+other device on the same tailnet.
+
+The **first time** you start the server this way, macOS will likely pop
+up **"Do you want the application 'python3' to accept incoming network
+connections?"** - click **Allow**. If you click Deny (or it times out),
+other devices won't be able to reach it even though it looks like it
+started fine locally.
 
 ## Deploying to a NAS (recommended path)
 

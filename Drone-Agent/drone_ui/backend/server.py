@@ -152,8 +152,23 @@ def connect(req: ConnectRequest):
     stop_event = threading.Event()
     log_dir = os.path.dirname(req.log_path)
     if log_dir:
+        if os.path.exists(log_dir) and not os.path.isdir(log_dir):
+            # A file (not a folder) is sitting where the log directory
+            # needs to go - os.makedirs(..., exist_ok=True) silently
+            # fails in this exact case, which otherwise surfaces as a
+            # confusing generic "Internal error: No such file or
+            # directory" with no indication of what's actually wrong.
+            raise HTTPException(
+                400,
+                f"'{log_dir}' already exists but is a file, not a folder - "
+                f"delete or rename it (e.g. `rm {log_dir}`) so the log "
+                f"directory can be created there.",
+            )
         os.makedirs(log_dir, exist_ok=True)
-    log_file = open(req.log_path, "a")
+    try:
+        log_file = open(req.log_path, "a")
+    except OSError as e:
+        raise HTTPException(500, f"Could not open log file '{req.log_path}': {e}")
 
     reader = threading.Thread(
         target=da.telemetry_reader_thread,
@@ -269,6 +284,16 @@ def chat(req: ChatRequest):
         return {"answer": None, "pending_action": _pending_action_public(), "error": str(e)}
 
     return {"answer": answer, "pending_action": _pending_action_public(), "error": None}
+
+
+@app.post("/api/chat/clear")
+def clear_chat():
+    """Resets the assistant's conversation memory - called when the user
+    clears the chat panel, so a visually-cleared chat doesn't leave the
+    model still quietly remembering everything said before the clear."""
+    if session.assistant is not None:
+        session.assistant.history = []
+    return {"cleared": True}
 
 
 # ---------------------------------------------------------------------------

@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Logs
+*.jsonl
+telemetry_log.jsonl
+
+# OS/editor
+.DS_Store
+.vscode/
+
+# Env
+.env

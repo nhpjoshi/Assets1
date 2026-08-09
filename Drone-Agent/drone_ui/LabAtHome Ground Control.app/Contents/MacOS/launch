@@ -1,0 +1,19 @@
+#!/bin/bash
+# This is the executable inside the .app bundle. It doesn't run the
+# server directly - it opens Terminal and runs the existing
+# start_mac.command there instead, so you still get visible logs and can
+# stop the server just by closing that Terminal window. The .app wrapper
+# only exists to give this a real icon you can pin to the Dock/Launchpad.
+
+# Resolve the folder containing this .app bundle (three levels up from
+# Contents/MacOS/launch) - assumes the .app sits next to start_mac.command,
+# which is how it ships in this repo. Don't move the .app away from the
+# project folder, or update this path if you do.
+APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
+
+osascript <<EOF
+tell application "Terminal"
+    activate
+    do script "cd '$APP_DIR' && ./start_mac.command"
+end tell
+EOF

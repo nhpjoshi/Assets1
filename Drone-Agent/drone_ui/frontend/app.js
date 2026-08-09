@@ -442,6 +442,16 @@ function addChatMessage(role, text) {
   return div;
 }
 
+el("chat-clear").addEventListener("click", async () => {
+  el("chat-log").innerHTML = '<div class="chat-msg system">Connect to a vehicle, then ask about GPS, battery, attitude, or say "RTL" / "loiter".</div>';
+  try {
+    await fetch(`${API_BASE}/api/chat/clear`, { method: "POST" });
+  } catch (err) {
+    // Backend history reset is best-effort - the visible log is already
+    // cleared either way, which is the part the user actually asked for.
+  }
+});
+
 function addThinkingIndicator() {
   const log = el("chat-log");
   const div = document.createElement("div");
