@@ -1,0 +1,61 @@
+# Deploy on the NAS with:  docker compose up -d --build
+#
+# network_mode: host is required so the container can (a) receive the
+# UDP MAVLink stream forwarded from mavlink-router on your laptop, and
+# (b) be reachable over Tailscale without fighting Docker's NAT. Only
+# works on Linux-based NAS OSes (Synology DSM, QNAP QTS/QuTS, TrueNAS
+# SCALE, etc.) - not available on Docker Desktop for Mac/Windows.
+#
+# Synology note: some DSM/Container Manager versions silently fall back
+# to bridge networking even when host mode is requested via the GUI's
+# Project import. After `docker compose up -d`, confirm it actually took:
+#   docker inspect labathome-ground-control --format '{{.HostConfig.NetworkMode}}'
+# If that prints "bridge" instead of "host", use the bridge-mode fallback
+# service definition (commented below) instead.
+
+services:
+  ground-control:
+    build: .
+    container_name: labathome-ground-control
+    network_mode: host
+    environment:
+      # Same-origin deployment (frontend served by this same container),
+      # so wide-open CORS is fine here. Tighten only if you split the
+      # frontend out to a separately-hosted deployment later.
+      - ALLOWED_ORIGINS=*
+      # Which LLM backend the chat/log-analysis features use:
+      # "ollama" (default, local, free, no internet needed) or
+      # "anthropic" (hosted Claude API, needs ANTHROPIC_API_KEY below -
+      # handy since most NAS hardware can't run a local model well).
+      - LLM_PROVIDER=ollama
+      # Point at wherever Ollama actually runs - most NAS hardware is too
+      # underpowered to serve an LLM well. Reachable over the same
+      # tailnet, e.g. http://laptop-hostname:11434
+      - OLLAMA_HOST=http://localhost:11434
+      # Only used when LLM_PROVIDER=anthropic. Set the real key in a
+      # local .env file (see .env.example) - never commit it here.
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - ANTHROPIC_MODEL=claude-sonnet-5
+    volumes:
+      - ./logs:/app/backend/logs
+    restart: unless-stopped
+
+  # --- Fallback if host networking isn't actually applying on your NAS ---
+  # Rename this to `ground-control` (and remove/rename the block above)
+  # if `docker inspect` showed "bridge" instead of "host". You'll also
+  # need to point mavlink-router's UDP output at the NAS's IP:14550 as
+  # before - published ports make that still reachable, just via bridge
+  # NAT instead of the host network directly.
+  #
+  # ground-control-bridge:
+  #   build: .
+  #   container_name: labathome-ground-control
+  #   ports:
+  #     - "8765:8765/tcp"
+  #     - "14550:14550/udp"
+  #   environment:
+  #     - ALLOWED_ORIGINS=*
+  #     - OLLAMA_HOST=http://localhost:11434
+  #   volumes:
+  #     - ./logs:/app/backend/logs
+  #   restart: unless-stopped

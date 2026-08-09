@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LabAtHome Ground Control</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<link rel="stylesheet" href="style.css" />
+<script src="config.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">◎</span>
+    <span class="brand-name">LABATHOME GROUND CONTROL</span>
+  </div>
+
+  <form id="connect-form" class="connect-form">
+    <input id="port" type="text" placeholder="/dev/tty.usbserial-..." value="/dev/tty.usbserial-AK0SM39C" />
+    <input id="baud" type="number" placeholder="baud" value="57600" />
+    <label class="toggle">
+      <input id="enable-actions" type="checkbox" />
+      <span>arm actions</span>
+    </label>
+    <button id="connect-btn" type="submit">Connect</button>
+    <button id="disconnect-btn" type="button" disabled>Disconnect</button>
+  </form>
+
+  <div class="bell-wrap" id="bell-wrap">
+    <button id="alerts-bell" class="bell-btn" type="button" aria-label="Alerts" aria-haspopup="true" aria-expanded="false">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
+        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+      </svg>
+      <span class="bell-badge" id="bell-badge" hidden>0</span>
+    </button>
+  </div>
+
+  <div class="conn-status" id="conn-status">
+    <span class="dot" id="conn-dot"></span>
+    <span id="conn-label">DISCONNECTED</span>
+  </div>
+</header>
+
+<main class="grid">
+
+  <!-- Instruments -->
+  <section class="panel instruments">
+    <h2>Instruments</h2>
+
+    <div class="horizon-wrap">
+      <svg id="horizon" viewBox="0 0 200 200" class="horizon">
+        <defs>
+          <clipPath id="horizon-clip"><circle cx="100" cy="100" r="92" /></clipPath>
+        </defs>
+        <circle cx="100" cy="100" r="94" class="horizon-bezel" />
+        <g clip-path="url(#horizon-clip)">
+          <g id="horizon-tilt">
+            <rect x="-200" y="-200" width="500" height="300" class="sky" />
+            <rect x="-200" y="100" width="500" height="300" class="ground" />
+            <line x1="-200" y1="100" x2="300" y2="100" class="horizon-line" />
+          </g>
+        </g>
+        <circle cx="100" cy="100" r="94" class="horizon-ring" />
+        <line x1="60" y1="100" x2="85" y2="100" class="horizon-mark" />
+        <line x1="115" y1="100" x2="140" y2="100" class="horizon-mark" />
+        <polygon points="100,88 108,100 92,100" class="horizon-nose" />
+      </svg>
+      <div class="horizon-readout">
+        <span id="roll-val">ROLL --</span>
+        <span id="pitch-val">PITCH --</span>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card" data-card="gps">
+        <div class="card-label"><span class="fresh-dot" id="gps-fresh"></span>GPS</div>
+        <div class="card-value" id="gps-fix">--</div>
+        <div class="card-sub" id="gps-sub">no data</div>
+      </div>
+      <div class="card" data-card="battery">
+        <div class="card-label"><span class="fresh-dot" id="batt-fresh"></span>BATTERY</div>
+        <div class="card-value" id="batt-pct">--%</div>
+        <div class="card-sub" id="batt-sub">no data</div>
+      </div>
+      <div class="card" data-card="altitude">
+        <div class="card-label"><span class="fresh-dot" id="alt-fresh"></span>ALTITUDE</div>
+        <div class="card-value" id="alt-val">-- m</div>
+        <div class="card-sub" id="alt-sub">relative</div>
+      </div>
+      <div class="card" data-card="distance">
+        <div class="card-label"><span class="fresh-dot" id="dist-fresh"></span>DISTANCE COVERED</div>
+        <div class="card-value" id="dist-val">-- m</div>
+        <div class="card-sub" id="dist-sub">cumulative ground track</div>
+      </div>
+      <div class="card" data-card="attitude">
+        <div class="card-label"><span class="fresh-dot" id="att-fresh"></span>ATTITUDE STREAM</div>
+        <div class="card-value" id="att-status">no data</div>
+        <div class="card-sub" id="att-sub">waiting for ATTITUDE messages</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live map -->
+  <section class="panel map-panel">
+    <div class="panel-header">
+      <h2>Live Position</h2>
+      <button id="map-expand" class="icon-btn" type="button" aria-label="Expand map">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+        </svg>
+      </button>
+    </div>
+    <div id="map-dock">
+      <div class="map-wrap" id="map-wrap">
+        <div id="map" class="map"></div>
+        <div class="map-placeholder" id="map-placeholder">Waiting for GPS fix…</div>
+      </div>
+    </div>
+    <div class="map-footer">
+      <div class="map-readout">
+        <span id="map-lat">LAT --</span>
+        <span id="map-lon">LON --</span>
+        <span id="map-sats">SATS --</span>
+      </div>
+      <div class="map-controls">
+        <label class="toggle"><input type="checkbox" id="map-follow" checked /><span>auto-follow</span></label>
+        <button id="map-recenter" type="button">Recenter</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Actions -->
+  <section class="panel actions">
+    <h2>Flight Actions</h2>
+    <div class="action-buttons">
+      <button class="action-btn" data-action="rtl">RTL</button>
+      <button class="action-btn" data-action="loiter">LOITER</button>
+      <button class="action-btn" data-action="alt_hold">ALT HOLD</button>
+    </div>
+    <div class="pending-bar" id="pending-bar" hidden>
+      <span id="pending-label">--</span>
+      <button id="confirm-btn" class="confirm">CONFIRM</button>
+      <button id="cancel-btn" class="cancel">CANCEL</button>
+    </div>
+  </section>
+
+  <!-- Chat -->
+  <section class="panel chat">
+    <h2>Ask the Assistant</h2>
+    <div class="chat-log" id="chat-log">
+      <div class="chat-msg system">Connect to a vehicle, then ask about GPS, battery, attitude, or say "RTL" / "loiter".</div>
+    </div>
+    <form id="chat-form" class="chat-form">
+      <input id="chat-input" type="text" placeholder="e.g. is the GPS fix good enough to fly?" autocomplete="off" />
+      <button type="submit">Send</button>
+    </form>
+  </section>
+
+  <!-- Log analysis -->
+  <section class="panel log-analysis">
+    <h2>Post-flight Log Analysis</h2>
+    <input type="file" id="log-file" accept=".jsonl" />
+    <button id="analyze-btn">Analyze log</button>
+    <pre id="log-report" class="log-report"></pre>
+  </section>
+
+</main>
+
+<!-- Alerts popup -->
+<div class="modal-overlay" id="alerts-modal" hidden>
+  <div class="modal-panel modal-panel--alerts">
+    <div class="modal-header">
+      <span>Alerts</span>
+      <button id="alerts-close" class="icon-btn" type="button" aria-label="Close alerts">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <ul class="alert-list" id="alert-list">
+        <li class="alert-empty">No alerts yet.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Expanded map popup -->
+<div class="modal-overlay" id="map-modal" hidden>
+  <div class="modal-panel modal-panel--map">
+    <div class="modal-header">
+      <span>Live Position — expanded</span>
+      <button id="map-collapse" class="icon-btn" type="button" aria-label="Close expanded map">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body" id="map-modal-body"></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="app.js"></script>
+</body>
+</html>
