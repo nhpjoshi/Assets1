@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  background: #0b0b0b;
+  color: white;
+  font-family: Arial;
+}
+
+.container {
+  padding: 10px;
+}
+
+.controls {
+  margin-bottom: 10px;
+}
+
+.leaflet-container {
+  height: 70vh;
+  width: 100%;
+}
