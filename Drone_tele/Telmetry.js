@@ -3,7 +3,7 @@ const readline = require("readline");
 const { MongoClient } = require("mongodb");
 
 // 🔧 CONFIG
-const MONGO_URI = "mongodb+srv://admin:admin@cluster0.n2msm.mongodb.net/?appName=Cluster0";
+const MONGO_URI = "";
 const DB_NAME = "droneDB";
 const COLLECTION = "telemetry";
 const FILE_PATH = "./text.txt";
