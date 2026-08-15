@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 
 const MONGO_URI =
-  "mongodb+srv://admin:admin@cluster1.n2msm.mongodb.net/?appName=Cluster1";
+  "";
 
 const client = new MongoClient(MONGO_URI);
 
