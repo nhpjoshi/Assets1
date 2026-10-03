@@ -1,4 +1,4 @@
-# Project Horizon — Command  Sheet
+# Project Horizon — Command Cheat Sheet
 
 Quick lookup of every command used in the ScyllaDB benchmark. Organised by phase; each block says which machine to run it on.
 
@@ -336,3 +336,93 @@ SELECT * FROM apexx.user_profiles WHERE user_id = 11111111-1111-1111-1111-111111
 TRACING ON; SELECT * FROM apexx.user_profiles WHERE email = 'alice@example.com'; TRACING OFF;   -- 2 hops, 0.9 ms
 SELECT * FROM apexx.user_profiles_by_phone WHERE phone_number = '+14155550102';                 -- 2 rows
 ```
+
+---
+
+## 14. Table definitions
+
+### scylla-bench table (Deliverable B — created by scylla-bench)
+```sql
+-- keyspace pre-created by us
+CREATE KEYSPACE scylla_bench
+  WITH replication = {'class': 'NetworkTopologyStrategy', 'ap-south': 3};
+
+-- table created automatically by scylla-bench (check: DESCRIBE TABLE scylla_bench.test;)
+CREATE TABLE scylla_bench.test (
+  pk bigint,      -- partition key: 0 … 99,999
+  ck bigint,      -- clustering key: 0 … 999 rows per partition
+  v  blob,        -- 1 KB value (-clustering-row-size 1024)
+  PRIMARY KEY (pk, ck)
+) WITH compaction = {'class': 'IncrementalCompactionStrategy'};
+```
+
+### ApexX data model (Deliverable A — horizon-schema.cql)
+```sql
+-- Test cluster keyspace (production: 'us-east-1': 3, 'eu-west-1': 3, tablets on)
+CREATE KEYSPACE IF NOT EXISTS apexx
+  WITH replication = {'class': 'NetworkTopologyStrategy', 'ap-south': 3}
+  AND tablets = {'enabled': false};   -- needed on the 1-rack test cluster for views/indexes
+
+USE apexx;
+
+-- TABLE 1: session state — one row per user, read on every auction
+CREATE TABLE IF NOT EXISTS user_profiles (
+  user_id      uuid,
+  last_active  timestamp,
+  device_type  text,
+  email        text,
+  phone_number text,
+  PRIMARY KEY (user_id)                         -- partition key = whole primary key, no clustering key
+) WITH compaction = {'class': 'LeveledCompactionStrategy'}
+  AND per_partition_rate_limit = {'max_reads_per_second': 1000, 'max_writes_per_second': 200};
+
+-- Support: lookup by email (global secondary index, 2 hops)
+CREATE INDEX IF NOT EXISTS user_profiles_by_email ON user_profiles (email);
+
+-- Fraud: lookup by phone (materialized view, 1 hop, returns every account on a number)
+CREATE MATERIALIZED VIEW IF NOT EXISTS user_profiles_by_phone AS
+  SELECT phone_number, user_id, email, device_type, last_active
+  FROM user_profiles
+  WHERE phone_number IS NOT NULL AND user_id IS NOT NULL
+  PRIMARY KEY (phone_number, user_id);
+
+-- Helper: bucket count per publisher, changed only at hour boundaries
+CREATE TABLE IF NOT EXISTS publisher_shards (
+  publisher_id   text,
+  effective_from timestamp,
+  shard_count    smallint,                      -- N = peak rows/s × 3,600 ÷ 100,000 (min 1)
+  PRIMARY KEY (publisher_id, effective_from)
+) WITH CLUSTERING ORDER BY (effective_from DESC);
+
+-- TABLE 2: bid / impression log — append-only, by publisher over time, 30-day retention
+CREATE TABLE IF NOT EXISTS bid_log (
+  publisher_id     text,
+  hour             timestamp,                   -- event time truncated to the hour
+  shard            smallint,                    -- app sets hash(bid_id) % N (call it "bucket" in production)
+  event_ts         timestamp,
+  bid_id           timeuuid,
+  auction_id       uuid,
+  user_id          uuid,
+  advertiser_id    text,
+  bid_price_micros bigint,
+  won              boolean,
+  device_type      text,
+  PRIMARY KEY ((publisher_id, hour, shard), event_ts, bid_id)
+  --           └──── partition key ────┘   └─ clustering ─┘
+) WITH CLUSTERING ORDER BY (event_ts DESC, bid_id ASC)
+  AND default_time_to_live = 2592000            -- 30 days
+  AND gc_grace_seconds = 86400                  -- insert-only: drop expired days after 1 day, not 10
+  AND compaction = {'class': 'TimeWindowCompactionStrategy',
+                    'compaction_window_unit': 'DAYS',
+                    'compaction_window_size': 1};
+```
+
+### Key choices at a glance
+
+| Table | Partition key | Clustering key | Why |
+|---|---|---|---|
+| `scylla_bench.test` | `pk` | `ck` | Benchmark's fixed schema: 100k partitions × 1,000 rows |
+| `user_profiles` | `user_id` | none | One user, one profile, one row |
+| `user_profiles_by_phone` | `phone_number` | `user_id` | One phone can map to several users (fraud signal) |
+| `publisher_shards` | `publisher_id` | `effective_from DESC` | Latest bucket count first |
+| `bid_log` | `(publisher_id, hour, shard)` | `event_ts DESC, bid_id` | Query by publisher; hour bounds size; shard spreads hot publishers; time-range slices; bid_id prevents overwrites |
