@@ -1,4 +1,4 @@
-# Project Horizon — Command Cheat Sheet
+# Project Horizon — Command  Sheet
 
 Quick lookup of every command used in the ScyllaDB benchmark. Organised by phase; each block says which machine to run it on.
 
